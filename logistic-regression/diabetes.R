@@ -2,4 +2,4 @@ df <- read.csv('https://raw.githubusercontent.com/narxiss24/datasets/master/diab
 
 y <- df[df$Pregnancies > 3,]
 
-library('tidyverse')
+print('new')
