@@ -1,5 +1,5 @@
-# Title     : TODO
-# Objective : TODO
-# Created by: narxi
-# Created on: 12/9/2020
+df <- read.csv('https://raw.githubusercontent.com/narxiss24/datasets/master/diabetes.csv')
 
+y <- df[df$Pregnancies > 3,]
+
+library('tidyverse')
