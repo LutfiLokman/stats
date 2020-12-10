@@ -1,5 +1,11 @@
-df <- read.csv('https://raw.githubusercontent.com/narxiss24/datasets/master/diabetes.csv')
+library(dplyr)
 
-y <- df[df$Pregnancies > 3,]
+data <- read.csv('https://raw.githubusercontent.com/narxiss24/datasets/master/diabetes.csv')
 
-print('new')
+df  <- data[, c('BloodPressure','SkinThickness')] 
+
+gp  <- aggregate(data$Age, list(data$Outcome), FUN=length) 
+
+sm <- data %>% summarise(bp=mean(BloodPressure), glu=length(Glucose))
+
+print(head(sm))
