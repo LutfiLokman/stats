@@ -8,4 +8,4 @@ ggplot()+geom_histogram(data=demo, aes(x=income))
 
 ggsave('income.pdf')
 
-# print(t.test(demo$income, alternative='two.sided', mu=60))
+print(t.test(demo$income, alternative='two.sided', mu=60))
