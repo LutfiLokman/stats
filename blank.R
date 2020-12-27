@@ -3,10 +3,7 @@ circarr  <- read.csv("https://raw.githubusercontent.com/narxiss24/datasets/maste
 names(circarr)
 # [1] 'vsd' 'dhca' 'minutes' 'birthwt' 'age' 'clinseiz' 'eegseiz' 'pdi'
 
-table(circarr$dhca, circarr$clinseiz)
-#      0  1
-#   0 82  1
-#   1 77 10
+circarr[c("dhca", "clinseiz")]  <- lapply(circarr[c("dhca", "clinseiz")], factor, levels = c(1,0))
 
 fisher.test(circarr$dhca, circarr$clinseiz)
  
