@@ -35,8 +35,8 @@ ggplot() +
 
 qplot(dm$Glucose, dm$Outcome)
 
-# we expect the mean glucose is equal to the pregnant population mean glucose
-# of 120
+# we expect the sample mean glucose is equal to the population mean
+# glucose of 120
 dm_one_ttest <- t.test(dm$Glucose, mu = 120, alternative = "two.sided")
  
 # 	One Sample t-test
