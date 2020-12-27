@@ -1,44 +1,43 @@
 library("ggplot2")
 
-demo <- read.csv("https://raw.githubusercontent.com/narxiss24/datasets/master/diabetes.csv")
+dm <- read.csv("https://raw.githubusercontent.com/narxiss24/datasets/master/diabetes.csv")
 
-colnames(demo)
+colnames(dm)
 # [1] "Pregnancies"              "Glucose"                 
 # [3] "BloodPressure"            "SkinThickness"           
 # [5] "Insulin"                  "BMI"                     
 # [7] "DiabetesPedigreeFunction" "Age"                     
 # [9] "Outcome"                 
 
-summary(demo$Glucose)
+summary(dm$Glucose)
 #    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 #     0.0    99.0   117.0   120.9   140.2   199.0 
 
 #apply scaling
-demo <- demo[demo$Glucose > 0, ]
+dm <- dm[dm$Glucose > 0, ]
 
-summary(demo$Glucose)
+summary(dm$Glucose)
 #    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 #    44.0    99.0   117.0   121.7   141.0   199.0 
 
-demo$Outcome <- as.factor(demo$Outcome)
+dm$Outcome <- as.factor(dm$Outcome)
 
-table(demo$Outcome)
-#   0   1 
-# 497 266 
+table(dm$Outcome)
+# 0 1 497 266
 
-#check for normality
-m <- mean(demo$Glucose)
-std <- sd(demo$Glucose)
+# check for normality
+m <- mean(dm$Glucose)
+std <- sd(dm$Glucose)
 
 ggplot() + 
-	geom_histogram(data = demo, aes(x = Glucose, y = ..density..), fill = "blue") + 
+	geom_histogram(data = dm, aes(x = Glucose, y = ..density..), fill = "blue") + 
 	stat_function(fun = dnorm, args = list(mean = m, sd = std))
 
-qplot(demo$Glucose, demo$Outcome)
+qplot(dm$Glucose, dm$Outcome)
 
 #we expect the mean glucose of the first group (outcome=0) to be lower than
 #the mean glucose of the second group (outcome=1)
-dm_ttest <- t.test(Glucose ~ Outcome, data = demo, alternative = "less")
+dm_ttest <- t.test(Glucose ~ Outcome, data = dm, alternative = "less")
  
 # 	Welch Two Sample t-test
 # 
@@ -51,7 +50,7 @@ dm_ttest <- t.test(Glucose ~ Outcome, data = demo, alternative = "less")
 # mean in group 0 mean in group 1 
 #        110.6439        142.3195 
 
-dm_wilcox <- wilcox.test(Glucose ~ Outcome, data = demo, alternative = "less")
+dm_wilcox <- wilcox.test(Glucose ~ Outcome, data = dm, alternative = "less")
  
 # 	Wilcoxon rank sum test with continuity correction
 # 
