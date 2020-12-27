@@ -35,9 +35,25 @@ ggplot() +
 
 qplot(dm$Glucose, dm$Outcome)
 
+# we expect the mean glucose is equal to the pregnant population mean glucose
+# of 120
+dm_one_ttest <- t.test(dm$Glucose, mu = 120, alternative = "two.sided")
+ 
+# 	One Sample t-test
+# 
+# data:  dm$Glucose
+# t = 1.5258, df = 762, p-value = 0.1275
+# alternative hypothesis: true mean is not equal to 120
+# 95 percent confidence interval:
+#  119.5166 123.8569
+# sample estimates:
+# mean of x 
+#  121.6868 
+# 
+
 #we expect the mean glucose of the first group (outcome=0) to be lower than
 #the mean glucose of the second group (outcome=1)
-dm_ttest <- t.test(Glucose ~ Outcome, data = dm, alternative = "less")
+dm_two_ttest <- t.test(Glucose ~ Outcome, data = dm, alternative = "less")
  
 # 	Welch Two Sample t-test
 # 
@@ -50,6 +66,7 @@ dm_ttest <- t.test(Glucose ~ Outcome, data = dm, alternative = "less")
 # mean in group 0 mean in group 1 
 #        110.6439        142.3195 
 
+# If we are concerned about normality of the variable
 dm_wilcox <- wilcox.test(Glucose ~ Outcome, data = dm, alternative = "less")
  
 # 	Wilcoxon rank sum test with continuity correction
