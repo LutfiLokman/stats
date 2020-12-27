@@ -1,3 +1,5 @@
+library("ggplot2")
+
 demo <- read.csv("https://raw.githubusercontent.com/narxiss24/datasets/master/diabetes.csv")
 
 colnames(demo)
@@ -7,8 +9,11 @@ colnames(demo)
 # [7] "DiabetesPedigreeFunction" "Age"                     
 # [9] "Outcome"                 
 
-demo$Glucose
+summary(demo$Glucose)
+#    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#     0.0    99.0   117.0   120.9   140.2   199.0 
 
+#apply scaling
 demo <- demo[demo$Glucose > 0, ]
 
 summary(demo$Glucose)
@@ -18,18 +23,23 @@ summary(demo$Glucose)
 demo$Outcome <- as.factor(demo$Outcome)
 
 table(demo$Outcome)
-# 
 #   0   1 
 # 497 266 
 
-library("ggplot2")
+#check for normality
+m <- mean(demo$Glucose)
+std <- sd(demo$Glucose)
+
+ggplot() + 
+	geom_histogram(data = demo, aes(x = Glucose, y = ..density..), fill = "blue") + 
+	stat_function(fun = dnorm, args = list(mean = m, sd = std))
 
 qplot(demo$Glucose, demo$Outcome)
 
-# we expect the mean glucose of the first group (outcome=0) to be lower than
-# the mean glucose of the second group (outcome=1)
+#we expect the mean glucose of the first group (outcome=0) to be lower than
+#the mean glucose of the second group (outcome=1)
 dm_ttest <- t.test(Glucose ~ Outcome, data = demo, alternative = "less")
-# 
+ 
 # 	Welch Two Sample t-test
 # 
 # data:  Glucose by Outcome
@@ -40,13 +50,12 @@ dm_ttest <- t.test(Glucose ~ Outcome, data = demo, alternative = "less")
 # sample estimates:
 # mean in group 0 mean in group 1 
 #        110.6439        142.3195 
-# 
 
 dm_wilcox <- wilcox.test(Glucose ~ Outcome, data = demo, alternative = "less")
-# 
+ 
 # 	Wilcoxon rank sum test with continuity correction
 # 
 # data:  Glucose by Outcome
 # W = 27394, p-value < 2.2e-16
 # alternative hypothesis: true location shift is less than 0
-# 
+ 

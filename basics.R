@@ -1,3 +1,4 @@
+library('ggplot2')
 library('dplyr')
 
 demo  <- read.csv('https://raw.githubusercontent.com/narxiss24/datasets/master/demographics.csv')
