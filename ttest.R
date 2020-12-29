@@ -23,7 +23,8 @@ summary(dm$Glucose)
 dm$Outcome <- as.factor(dm$Outcome)
 
 table(dm$Outcome)
-# 0 1 497 266
+# 0   1 
+# 497 266
 
 # check for normality
 m <- mean(dm$Glucose)
